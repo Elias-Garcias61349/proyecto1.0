@@ -146,20 +146,21 @@
     </nav>
     <!-- End Navbar -->
     <div class="card shadow-lg mx-4 card-profile-bottom">
+      {% comment %} parte del la imajen del usuario {% endcomment %}
       <div class="card-body p-3">
         <div class="row gx-4">
           <div class="col-auto">
             <div class="avatar avatar-xl position-relative">
-              <img src="{%static 'assets/img/team-1.jpg'%}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              <img src="{{ profile.photo.url }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
             </div>
           </div>
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                Sayo Kravits
+                {{profile.username}}
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
-                Public Relations
+                {{profile.email}}
               </p>
             </div>
           </div>
@@ -287,7 +288,7 @@
               <div class="col-4 col-lg-4 order-lg-2">
                 <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
                   <a href="javascript:;">
-                    <img src="{%static 'assets/img/team-2.jpg'%}" class="rounded-circle img-fluid border border-2 border-white">
+                    <img src="{{profile.photo.url}}" class="rounded-circle img-fluid border border-2 border-white">
                   </a>
                 </div>
               </div>
@@ -321,7 +322,7 @@
               </div>
               <div class="text-center mt-4">
                 <h5>
-                  Mark Davis<span class="font-weight-light">, 35</span>
+                  {{profile.username}} <span class="font-weight-light">, 35</span>
                 </h5>
                 <div class="h6 font-weight-300">
                   <i class="ni location_pin mr-2"></i>Bucharest, Romania
