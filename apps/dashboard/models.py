@@ -2,6 +2,8 @@
 #es la plantilla
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 # Create your models here.
 class Profile(models.Model):
     id = models.AutoField(primary_key=True)
@@ -10,6 +12,8 @@ class Profile(models.Model):
     phone = models.IntegerField()
     email = models.CharField(max_length=50)
     photo = models.ImageField(upload_to='photos')
+    estatus = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user')
     class Meta:
         db_table='profile'
 
@@ -17,8 +21,9 @@ class Profile(models.Model):
 class Bitacora (models.Model):
     id = models.AutoField(primary_key=True)
     movimiento = models.CharField  (max_length= 255)
-    fecha = models.DateField(default=timezone.now )
+    fecha = models.DateTimeField(default=timezone.now)  # más claro para auditoría
+    user = models.ForeignKey(User, on_delete=models.CASCADE , db_column='id_user')
     class Meta:
         db_table='bitacora'
-    
+        ordering = ['-fecha']
     

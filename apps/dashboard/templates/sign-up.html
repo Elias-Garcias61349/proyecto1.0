@@ -45,13 +45,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="{% url 'sign-up' %}">
+            <a class="nav-link me-2" href="{% url 'signup' %}">
               <i class="fas fa-user-circle opacity-6  me-1"></i>
               Sign Up
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="{% url 'sign-in' %}">
+            <a class="nav-link me-2" href="{% url 'signin' %}">
               <i class="fas fa-key opacity-6  me-1"></i>
               Sign In
             </a>
@@ -130,26 +130,32 @@
               </div>
             </div>
             <div class="card-body">
-              <form role="form">
+              <form method="POST">
+                {% csrf_token %}
                 <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="Name" aria-label="Name">
+                  <input type="text" name="username" class="form-control" placeholder="Nombre de usuario" aria-label="Username" required>
                 </div>
                 <div class="mb-3">
-                  <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                  <input type="password" name="password1" class="form-control" placeholder="Contraseña" aria-label="Password" required>
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                  <input type="password" name="password2" class="form-control" placeholder="Repetir contraseña" aria-label="Repeat Password" required>
                 </div>
                 <div class="form-check form-check-info text-start">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
                   <label class="form-check-label" for="flexCheckDefault">
-                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                    Acepto los <a href="javascript:;" class="text-dark font-weight-bolder">Términos y condiciones</a>
                   </label>
                 </div>
+                {% if error_exist %}
+                  <div class="alert alert-danger mt-3">
+                    {{ error_exist }}
+                  </div>
+                {% endif %}
                 <div class="text-center">
-                  <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Registrarse</button>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="{% url 'sign-in' %}" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">¿Ya tienes una cuenta? <a href="{% url 'signin' %}" class="text-dark font-weight-bolder">Iniciar sesión</a></p>
               </form>
             </div>
           </div>
