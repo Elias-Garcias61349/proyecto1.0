@@ -13,17 +13,20 @@ class Profile(models.Model):
     email = models.CharField(max_length=50)
     photo = models.ImageField(upload_to='photos')
     estatus = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='id_user', null=True, blank=True)
     class Meta:
-        db_table='profile'
+        db_table = 'profile'
 
 
-class Bitacora (models.Model):
+
+class Bitacora(models.Model):
     id = models.AutoField(primary_key=True)
-    movimiento = models.CharField  (max_length= 255)
-    fecha = models.DateTimeField(default=timezone.now)  # más claro para auditoría
-    user = models.ForeignKey(User, on_delete=models.CASCADE , db_column='id_user')
+    movimiento = models.CharField(max_length=255)  
+    fecha = models.DateTimeField(default=timezone.now)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,db_column='id_user'  # fuerza el nombre de columna en la BD
+)
+
     class Meta:
-        db_table='bitacora'
+        db_table = 'bitacora'
         ordering = ['-fecha']
-    

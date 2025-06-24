@@ -1,9 +1,9 @@
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from apps.dashboard import views
 from django.conf import settings
-
+from apps.tasks import views as task_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.dashboard, name='dashboard'),
@@ -14,10 +14,13 @@ urlpatterns = [
     path('delete_profile/<int:profile_id>/', views.delete_profile, name='delete_profile'),
     path('sign-in/', views.sign_in, name='signin'),
     path('sign-up/', views.sign_up, name='signup'),
-    path('export/', views.export_data, name='export_data'),  # Usa el nombre correcto de la vista
-    path('export_bitacora/', views.export_data_bitacora, name='export_data_bitacora'),  # Usa el nombre correcto de la vista
-    path('close/', views.close, name='close')
-    ]
+    path('export/', views.export_data, name='export_data'),
+    path('export_bitacora/', views.export_data_bitacora, name='export_data_bitacora'),
+    path('close/', views.close, name='close'),
+
+    # URLs de la app tasks
+    path('tasks/', task_views.tasks, name='tasks'),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

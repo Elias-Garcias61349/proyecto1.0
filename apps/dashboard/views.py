@@ -1,3 +1,4 @@
+from asyncio import Task
 from .models import Profile, Bitacora, User
 from .forms import ProfileForm
 
@@ -11,6 +12,8 @@ from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout  
 from django.contrib.auth.decorators import login_required
+
+# from apps.tasks.models import Task
 
 #-- Dashboard -----------------------------------------------------
 def dashboard(request):
@@ -304,3 +307,27 @@ def export_data_bitacora(request):
 
     # Retornamos la respuesta, lo que provoca la descarga del archivo en el navegador
     return response
+
+
+#----------------------TASK-----------------------
+# @login_required
+# def task_list(request):
+#     profile = request.user.profile_set.first()
+#     task_list = Task.objects.filter(profile=profile)
+    
+#     search_query = request.GET.get('filter', '')
+#     if search_query:
+#         task_list = task_list.filter(
+#             Q(nombre__icontains=search_query)
+#         )
+    
+#     #paginator
+#     paginator = Paginator(task_list, 5)
+#     pague_number = request.GET.get('page')
+#     task = paginator.get_page(pague_number)
+    
+#     context = {
+#         'task' : task
+#     }
+    
+#     return render(request, 'tasks/tasks_list.html', context)

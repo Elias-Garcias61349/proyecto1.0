@@ -15,9 +15,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tables</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tareas</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Tables</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Tareas</h6>
         </nav>
         {% comment %} motor de busqyeda de la pagina {% endcomment %}
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -126,8 +126,8 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <div class="d-flex justify-content-between align-items-center">
-                <h6>Lista de Perfiles</h6>
-                <a class="btn btn-info" href="{% url 'export_data' %}">Exporta Lista</a>
+                <h6>Lista de Tareas</h6>
+                {% comment %} <a class="btn btn-info" href="{% url 'export_data' %}">Exporta Lista</a> {% endcomment %}
               </div>
               
             </div>
@@ -137,68 +137,70 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">usuario</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre/Descripcion</th>
+                      
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estatus</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for profile in profiles %}
+                    {% for tasks in tasks %}
                       <tr>
                         <td>
                           <div class="d-flex px-2 py-1">
-                            <div>
+                            {% comment %} <div>
                               <img src="{% if profile.photo %}{{ profile.photo.url }}{% else %}/static/default.jpg{% endif %}" class="avatar avatar-sm me-3" alt="user">
-                            </div>
+                            </div> {% endcomment %}
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">{{ profile.name }}</h6>
-                              <p class="text-xs text-secondary mb-0">{{ profile.email }}</p>
+                              <h6 class="mb-0 text-sm">{{ tasks.nombre }}</h6>
+                              <p class="text-xs text-secondary mb-0">{{ tasks.descripcion }}</p>
                             </div>
                           </div>
                         </td>
-                        <td>
-                          <p class="text-xs font-weight-bold mb-0">{{ profile.username }}</p>
-                          <p class="text-xs text-secondary mb-0">{{ profile.phone }}</p>
-                        </td>
-                        {% if profile.estatus %}
+                        {% if tasks.estatus %}
                         <td class="align-middle text-center text-sm">
-                          <span class="badge badge-sm bg-gradient-success">Online</span>
+                          <span class="badge badge-sm bg-gradient-success">Terminado</span>
                         </td>
                         {% else %}
                         <td class="align-middle text-center text-sm">
-                          <span class="badge badge-sm bg-gradient-danger">Offline</span>
+                          <span class="badge badge-sm bg-gradient-danger">En Proceso</span>
                         </td>
                         {% endif %}
-                        <td class="align-middle">
-                          <a href="{% url 'edit_profile' profile.id%}" class="text-secondary font-weight-bold text-xs">Edit</a>
-                        </td>
-                        <td class="align-middle">
-                          <a href="{% url 'delete_profile' profile.id %}" class="text-secondary font-weight-bold text-xs">Eliminar perfil</a>
-                        </td> 
+                        
                       </tr>
                     {% empty %}
                       <tr><td colspan="5">No hay perfiles encontrados.</td></tr>
                     {% endfor %}
                   </tbody>
                 </table>
-                <!-- inicio de los botones de la paginacion -->
-                  <div class="pagination d-flex justify-content-end">
-                    <span class="step-links">
-                      {% if profiles.has_previous %}
-                        <a class="btn btn-sm btn-rounded btn-primary" href="?page_profiles=1&profile_filter={{ profile_filter }}"><i class="ni ni-bold-up"></i></a>
-                        <a class="btn btn-sm btn-rounded btn-primary" href="?page_profiles={{ profiles.previous_page_number }}&profile_filter={{ profile_filter }}"><i class="ni ni-bold-left"></i></a>
-                      {% endif %}
+                <!-- inicio de los botones de la paginación -->
+                <div class="pagination d-flex justify-content-end">
+                  <span class="step-links">
+                    {% if tasks.has_previous %}
+                      <a class="btn btn-sm btn-rounded btn-primary" href="?page_tasks=1&filter={{ filter }}">
+                        <i class="ni ni-bold-up"></i>
+                      </a>
+                      <a class="btn btn-sm btn-rounded btn-primary" href="?page_tasks={{ tasks.previous_page_number }}&filter={{ filter }}">
+                        <i class="ni ni-bold-left"></i>
+                      </a>
+                    {% endif %}
 
-                      {% if profiles.has_next %}
-                        <a class="btn btn-sm btn-rounded btn-primary" href="?page_profiles={{ profiles.next_page_number }}&profile_filter={{ profile_filter }}"><i class="ni ni-bold-right"></i></a>
-                        <a class="btn btn-sm btn-rounded btn-primary" href="?page_profiles={{ profiles.paginator.num_pages }}&profile_filter={{ profile_filter }}"><i class="ni ni-bold-down"></i></a>
-                      {% endif %}
-                      
-                      <a class="btn btn-sm btn-rounded btn-primary">Página {{ profiles.number }} de {{ profiles.paginator.num_pages }}</a>
-                    </span>
-                  </div>
-                <!-- final de los botones  -->
+                    {% if tasks.has_next %}
+                      <a class="btn btn-sm btn-rounded btn-primary" href="?page_tasks={{ tasks.next_page_number }}&filter={{ filter }}">
+                        <i class="ni ni-bold-right"></i>
+                      </a>
+                      <a class="btn btn-sm btn-rounded btn-primary" href="?page_tasks={{ tasks.paginator.num_pages }}&filter={{ filter }}">
+                        <i class="ni ni-bold-down"></i>
+                      </a>
+                    {% endif %}
+
+                    <a class="btn btn-sm btn-rounded btn-primary">
+                      Página {{ tasks.number }} de {{ tasks.paginator.num_pages }}
+                    </a>
+                  </span>
+                </div>
+                <!-- final de los botones -->
+
               </div>
             </div>
           </div>

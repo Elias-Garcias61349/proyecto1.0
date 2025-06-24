@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.dashboard',
+    'apps.tasks',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),  # <- aquí debes poner localhost
+        'HOST': config('DB_HOST'), 
         'PORT': config('DB_PORT'),       # <- puerto externo mapeado en docker ps
     }
 }
