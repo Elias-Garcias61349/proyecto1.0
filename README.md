@@ -16,35 +16,38 @@ git clone https:
 cd proyecto1.0
 ```
 
-2. Crea un entorno virtual y actívalo:
----
-
+2. Crea un entorno virtual y actívalo
 ```bash
 python -m venv env
-source env/bin/activate  # En Windows: env\Scripts\activate
+source env/bin/activate     # En Windows: env\Scripts\activate
 ```
-
-3. Instala las dependencias del proyecto:
+3. Instala las dependencias
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Configura la conexión a la base de datos en .env o mediante variables de entorno:
+4. Configura la base de datos en .env (o desde settings.py)
+env
 ```bash
 DEBUG=True
 SECRET_KEY=django-insecure-r-bi-2f5im403
 DB_NAME=snake
 DB_USER=postgres
 DB_PASSWORD=postgres
-DB_HOST=localhost  # A qui va tu ip de django
-DB_PORT=5433  #y aqui va el pueto que vallas a utilizar 
+DB_HOST=localhost       # o la IP de tu servidor de base de datos
+DB_PORT=5433            # Puerto que estás usando
 ```
-5. Aplica migraciones:
+⚠️ Asegúrate de tener PostgreSQL corriendo y la base de datos creada con el nombre snake.
+
+5. Aplica las migraciones
 ```bash
 python manage.py migrate
 ```
-
-6. Ejecuta o avtiva el servidor, no deves de salir de tu entorno virtual 
+6. Crea un superusuario (opcional pero recomendado)
+```bash
+python manage.py createsuperuser
+```
+7. Inicia el servidor (no salgas del entorno virtual)
 ```bash
 python manage.py runserver 9090
 ```
